@@ -1,4 +1,4 @@
-# Simple Laravel API Integration
+# Trivago Assessment
 # Setup Database
 Open up the .env file, replace the values shown below with your database configuration.
 ```bash
