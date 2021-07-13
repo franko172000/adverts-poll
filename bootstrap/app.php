@@ -41,6 +41,11 @@ $app->singleton(
     Franklin\App\Exceptions\Handler::class
 );
 
+if(isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] === 'docker'){
+    $app->loadEnvironmentFrom('.env.docker');
+}
+
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

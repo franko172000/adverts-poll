@@ -5,7 +5,6 @@ namespace Franklin\App\Console\Commands;
 use Franklin\App\Business\Contracts\AdvertiserContract;
 use Franklin\App\Business\Services\Advertisers\AdvertiserA;
 use Franklin\App\Business\Services\Advertisers\AdvertiserB;
-use Franklin\App\Business\Services\Advertisers\BaseAdvertiser;
 use Illuminate\Console\Command;
 
 class PollAdverts extends Command
