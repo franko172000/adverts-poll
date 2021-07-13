@@ -11,7 +11,7 @@ class AdvertiserService {
         $this->repository = $repository;
     }
 
-    public function getRooms(){
-        return $this->repository->getRooms();
+    public function getRooms(array $params){
+        return $this->repository->getRooms($params);
     }
 }
