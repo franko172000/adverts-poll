@@ -45,7 +45,7 @@ class PollAdverts extends Command
      */
     public function handle()
     {
-        $this->info("Polling stated");
+        $this->info("Polling started");
         array_walk($this->advertisers, function($val){
             $advertiser = resolve($val);
             if($advertiser instanceof AdvertiserContract){

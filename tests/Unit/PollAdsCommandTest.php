@@ -25,7 +25,7 @@ class PollAdsCommandTest extends TestCase
     public function testPollAdsCommands()
     {
         $this->artisan('adverts:poll')
-        ->expectsOutput('Polling stated')
+        ->expectsOutput('Polling started')
         ->expectsOutput('Polling completed')
         ->assertExitCode(0);
 
