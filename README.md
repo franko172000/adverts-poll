@@ -33,7 +33,7 @@ Install dependencies
 ```
 # Run unit test
 ```bash
- vendor/bin/phpunit
+ ./vendor/bin/phpunit
 ```
 
 # Run on Docker
@@ -42,6 +42,16 @@ Navigate to the directory on your terminal and run the command below
 ```bash
  docker-compose up -d or docker compose up -d
 ``` 
+
+# Endpoint
+/api/rooms
+# Filter Params
+1. page - for pagination
+2. limit - limit results default is 20
+3. price_from - set minimum price to filter
+4. price_to - set maximum price to filter
+
+<img src="postman.JPG"></a></p>
 # Author
 Anyaso Franklin <br />
 franko172000@gmail.com
