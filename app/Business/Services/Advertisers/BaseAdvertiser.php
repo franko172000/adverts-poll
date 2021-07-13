@@ -4,6 +4,7 @@ namespace Franklin\App\Business\Services\Advertisers;
 use Franklin\App\Business\Repositories\AdvertisersRepository;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use Psr\Http\Message\ResponseInterface;
 
 abstract class BaseAdvertiser{
     protected string $endpoint;
@@ -12,19 +13,36 @@ abstract class BaseAdvertiser{
 
     protected AdvertisersRepository $repository;
 
+    /**
+     * Init class
+     *
+     * @param GuzzleHttp\Client $guzzle
+     * @param Franklin\App\Business\Repositories\AdvertisersRepository $repository
+     */
     public function __construct(Client $guzzle, AdvertisersRepository $repository)
     {
         $this->repository = $repository;
         $this->client = $guzzle;
     }
 
-    protected function apiRequest(array $reqHeader = []){
+    /**
+     * Undocumented function
+     *
+     * @param array $reqHeader
+     * @return Psr\Http\Message\ResponseInterface
+     */
+    protected function apiRequest(array $reqHeader = []): ResponseInterface{
         $headers = array_merge($this->headers, $reqHeader);
         return $this->client->get($this->endpoint, [
             'headers' =>  $headers
         ]);
     }
 
+    /**
+     * Make Json request
+     *
+     * @return array
+     */
     protected function makeJsonRequest(): array{
         try{
             $response = $this->apiRequest();
@@ -34,6 +52,11 @@ abstract class BaseAdvertiser{
         }
     }
 
+    /**
+     * Make XML request
+     *
+     * @return \SimpleXMLElement
+     */
     protected function makeXMLRequest(): \SimpleXMLElement{
         $content = "";
         try{

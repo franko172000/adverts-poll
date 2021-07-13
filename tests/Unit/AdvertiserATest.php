@@ -46,6 +46,11 @@ class AdvertiserATest extends TestCase
         $this->assertEquals($orgTax['type'], $dbtax->type);
     }
 
+    /**
+     * Test hotel data transformation
+     *
+     * @return void
+     */
     public function testFormatHotelData(){
         $reflection = new \ReflectionClass(get_class($this->advertiserA));
         $data = $this->mockResponseA();
