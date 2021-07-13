@@ -17,8 +17,9 @@ class HomeController extends Controller
         $this->advertiser = $advertiser;
     }
     
-    public function getRooms(){
-        $rooms = $this->advertiser->getRooms();
+    public function getRooms(Request $request){
+        $params = $request->all();
+        $rooms = $this->advertiser->getRooms($params);
         return RoomsResource::collection($rooms);
     }
 }

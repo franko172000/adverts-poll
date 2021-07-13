@@ -6,10 +6,11 @@ use Franklin\App\Business\Mappers\RoomMapper;
 use Franklin\App\Business\Mappers\TaxMapper;
 use Franklin\App\Models\Hotels;
 use Franklin\App\Models\Rooms;
+use Illuminate\Support\Arr;
 
 class AdvertisersRepository {
-    private Hotels $hotelEnitity;
-    private Rooms $roomsEnitity;
+    protected Hotels $hotelEnitity;
+    protected Rooms $roomsEnitity;
 
     public function __construct(Hotels $hotels, Rooms $rooms)
     {
@@ -70,10 +71,28 @@ class AdvertisersRepository {
         });
     }
 
-    public function getRooms(){
-        return $this->roomsEnitity
+    public function getRooms(array $options = []){
+
+        $priceFrom = (float) Arr::get($options,'price_from', 0);
+        $priceTo = (float) Arr::get($options,'price_to', 0);
+        $limit = Arr::get($options,'limit', 0);
+
+        $obj = $this->roomsEnitity
         ->orderBy('total_amount')
-        ->with('hotel','taxes')
-        ->get();
+        ->with('hotel','taxes');
+
+        if($priceFrom > 0 && $priceTo > 0){
+            $obj = $obj->whereBetween('total_amount', [$priceFrom, $priceTo]);
+        }
+
+        if($priceFrom > 0 && $priceTo == 0){
+            $obj = $obj->where('total_amount','>=', $priceFrom);
+        }
+
+        if($limit > 0){
+            $obj = $obj->limit($limit);
+        }
+
+        return $obj->get();
     }
 }
