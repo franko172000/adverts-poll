@@ -13,7 +13,12 @@ use GuzzleHttp\HandlerStack;
 trait AdvertisersTestSetup{
     use MockResponse;
     
-    public function mockDependencies(): array{
+    /**
+     * Setup mockery
+     *
+     * @return array
+     */
+    protected function mockDependencies(): array{
         $mockHandler = new MockHandler();
         $handler = HandlerStack::create($mockHandler);
   
@@ -28,7 +33,12 @@ trait AdvertisersTestSetup{
         ];
     }
 
-    public function setUpAdvertiserB(){
+    /**
+     * mock class mockery with mock resonse
+     *
+     * @return void
+     */
+    protected function setUpAdvertiserB(){
         [
             $mockHandler,
             $client,
@@ -40,7 +50,12 @@ trait AdvertisersTestSetup{
         $mockHandler->append(new GuzzleReponse(200, [], json_encode($this->mockResponseB())));
     }
 
-    public function setUpAdvertiserA(){
+    /**
+     * mock class mockery with mock resonse
+     *
+     * @return void
+     */
+    protected function setUpAdvertiserA(){
         [
             $mockHandler,
             $client,

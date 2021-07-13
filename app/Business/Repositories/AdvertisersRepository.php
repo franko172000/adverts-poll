@@ -9,18 +9,31 @@ use Franklin\App\Models\Rooms;
 use Illuminate\Support\Arr;
 
 class AdvertisersRepository {
-    protected Hotels $hotelEnitity;
-    protected Rooms $roomsEnitity;
+    protected Hotels $hotelEntity;
+    protected Rooms $roomsEntity;
 
+    /**
+     * Init object
+     *
+     * @param Hotels $hotels
+     * @param Rooms $rooms
+     */
     public function __construct(Hotels $hotels, Rooms $rooms)
     {
-        $this->hotelEnitity = $hotels;
-        $this->roomsEnitity = $rooms;
+        $this->hotelEntity = $hotels;
+        $this->roomsEntity = $rooms;
     }
 
+
+    /**
+     * Save array of hotels
+     *
+     * @param HotelMapper ...$hotels
+     * @return void
+     */
     public function saveHotel(HotelMapper ...$hotels) {
         array_walk($hotels, function($hotel){
-            $hotelObj = $this->hotelEnitity->updateOrCreate([
+            $hotelObj = $this->hotelEntity->updateOrCreate([
                 'name' => $hotel->getName(),
                 'stars' => $hotel->getStars(),
             ]);
@@ -30,9 +43,16 @@ class AdvertisersRepository {
         
     }
 
+    /**
+     * Save hotel rooms
+     *
+     * @param Hotels $hotel
+     * @param RoomMapper ...$data
+     * @return void
+     */
     private function saveRooms(Hotels $hotel, RoomMapper ...$data){
         array_walk($data, function($val) use($hotel){
-            $room = $this->roomsEnitity
+            $room = $this->roomsEntity
             ->where('code', $val->getCode())
             ->where('hotel_id', $hotel->id)
             ->first();
@@ -58,6 +78,13 @@ class AdvertisersRepository {
         });
     }
 
+    /**
+     * Save room taxes
+     *
+     * @param Rooms $room
+     * @param TaxMapper ...$taxes
+     * @return void
+     */
     private function saveTaxes(Rooms $room, TaxMapper ...$taxes){
         //delete existing tax records for the room
         $room->taxes()->delete();
@@ -71,13 +98,21 @@ class AdvertisersRepository {
         });
     }
 
-    public function getRooms(array $options = []){
+    /**
+     * Get rooms with filter options
+     *
+     * @param array $options
+     * @return array
+     */
+    public function getRooms(array $options = []): array{
 
         $priceFrom = (float) Arr::get($options,'price_from', 0);
         $priceTo = (float) Arr::get($options,'price_to', 0);
-        $limit = Arr::get($options,'limit', 0);
+        $limit = Arr::get($options,'limit', 20);
+        $page = Arr::get($options,'page', 1);
+        $offset = ($page - 1) * $limit;
 
-        $obj = $this->roomsEnitity
+        $obj = $this->roomsEntity
         ->orderBy('total_amount')
         ->with('hotel','taxes');
 
@@ -89,10 +124,11 @@ class AdvertisersRepository {
             $obj = $obj->where('total_amount','>=', $priceFrom);
         }
 
-        if($limit > 0){
-            $obj = $obj->limit($limit);
-        }
+        $total = $obj->count();
+        $collection = $obj->limit($limit)
+        ->offset($offset)
+        ->get();
 
-        return $obj->get();
+        return [$collection, $total];
     }
 }

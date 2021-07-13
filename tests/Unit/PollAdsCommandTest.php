@@ -22,6 +22,11 @@ class PollAdsCommandTest extends TestCase
         $this->setUpAdvertiserB();
     }
    
+    /**
+     * Test commans works
+     *
+     * @return void
+     */
     public function testPollAdsCommands()
     {
         $this->artisan('adverts:poll')
@@ -57,6 +62,4 @@ class PollAdsCommandTest extends TestCase
             "total_amount"=> "152",
         ]);
     }
-
-
 }

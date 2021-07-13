@@ -46,6 +46,11 @@ class AdvertiserBTest extends TestCase
         $this->assertEquals($orgHotel['stars'], $dbHotel->stars);
     }
 
+    /**
+     * Test hotel data transformation
+     *
+     * @return void
+     */
     public function testFormatHotelData(){
         $reflection = new \ReflectionClass(get_class($this->advertiserA));
         $data = $this->mockResponseB();

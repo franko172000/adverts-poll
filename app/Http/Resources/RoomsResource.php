@@ -26,7 +26,13 @@ class RoomsResource extends JsonResource
         ];
     }
 
-    private function getTotalTax(array $taxes){
+    /**
+     * Calculate total tax
+     *
+     * @param array $taxes
+     * @return string
+     */
+    private function getTotalTax(array $taxes): string{
         $total = 0;
         foreach($taxes as $tax){
             $total += $tax['amount'];

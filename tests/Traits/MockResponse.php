@@ -2,7 +2,12 @@
 namespace Tests\Traits;
 
 trait MockResponse {
-    public function mockResponseB(){
+    /**
+     * Mock response data
+     *
+     * @return void
+     */
+    protected function mockResponseB(){
         return [
             "hotels"=> [
                 [
@@ -153,7 +158,13 @@ trait MockResponse {
             ]
         ];
     }
-    public function mockResponseA(){
+
+    /**
+     * Mock response data
+     *
+     * @return void
+     */
+    protected function mockResponseA(){
         return [
             "hotels"=> [
                 [

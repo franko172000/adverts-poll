@@ -11,15 +11,29 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     private $advertiser;
-    private $advertiser2;
+
+    /**
+     * Init controller class
+     *
+     * @param Franklin\App\Business\Services\Advertisers\AdvertiserService $advertiser
+     */
     public function __construct(AdvertiserService $advertiser)
     {
         $this->advertiser = $advertiser;
     }
     
+    /**
+     * Get rooms
+     *
+     * @param Illuminate\Http\Request $request
+     * @return void
+     */
     public function getRooms(Request $request){
         $params = $request->all();
-        $rooms = $this->advertiser->getRooms($params);
-        return RoomsResource::collection($rooms);
+        [$collections, $total] = $this->advertiser->getRooms($params);
+        return RoomsResource::collection($collections)->additional([
+            'totalFiltered' => $collections->count(),
+            'totalRecords' => $total
+        ]);
     }
 }

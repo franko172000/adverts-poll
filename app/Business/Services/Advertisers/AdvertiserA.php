@@ -10,6 +10,11 @@ class AdvertiserA extends BaseAdvertiser implements AdvertiserContract{
 
     protected string $endpoint = "https://f704cb9e-bf27-440c-a927-4c8e57e3bad1.mock.pstmn.io/s1/availability";
 
+    /**
+     * Get advert from remote server
+     *
+     * @return void
+     */
     public function pollAds()
     {
         //make request
@@ -19,6 +24,12 @@ class AdvertiserA extends BaseAdvertiser implements AdvertiserContract{
         $this->repository->saveHotel(...$hotels);
     }
 
+    /**
+     * Transform hotel data
+     *
+     * @param array $data
+     * @return array
+     */
     protected function formatHotelData(array $data): array{
         $mappers = array_map(function($val){
             $hotel = resolve(HotelMapper::class);
@@ -31,6 +42,12 @@ class AdvertiserA extends BaseAdvertiser implements AdvertiserContract{
         return $mappers;
     }
 
+    /**
+     * Transform Room Data
+     *
+     * @param array $data
+     * @return array
+     */
     protected function formatRoomData(array $data): array{
         $mappers = array_map(function($val){
             $room = resolve(RoomMapper::class);
@@ -44,6 +61,12 @@ class AdvertiserA extends BaseAdvertiser implements AdvertiserContract{
         return $mappers;
     }
 
+    /**
+     * Transform Tax Data
+     *
+     * @param array $data
+     * @return array
+     */
     protected function formatTaxData(array $data): array{
         if(!isset($data[0])){
             $data = [$data];
