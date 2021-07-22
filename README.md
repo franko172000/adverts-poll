@@ -1,4 +1,4 @@
-# Trivago Assessment
+# Simple advert poll from sample advertisers
 # Setup Database
 Open up the .env file, replace the values shown below with your database configuration.
 ```bash
@@ -42,9 +42,12 @@ Navigate to the directory on your terminal and run the command below
 ```bash
  docker-compose up -d or docker compose up -d
 ``` 
+# URL
+Local base url - http://localhost:8000
+Docker base url - http://localhost:8080
 
 # Endpoint
-/api/rooms
+http://localhost:8000/api/rooms
 # Filter Params
 1. page - for pagination
 2. limit - limit results default is 20

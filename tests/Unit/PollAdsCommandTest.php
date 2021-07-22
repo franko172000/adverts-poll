@@ -8,7 +8,6 @@ use Franklin\App\Models\Hotels;
 use Franklin\App\Models\Rooms;
 use Tests\TestCase;
 use Tests\Traits\AdvertisersTestSetup;
-use Tests\Traits\MockResponse;
 
 class PollAdsCommandTest extends TestCase
 {
